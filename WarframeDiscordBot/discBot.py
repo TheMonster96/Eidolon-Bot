@@ -95,6 +95,10 @@ enemy_types=["Orokin",
              "Corpus",
              "Infested"]
 
+mission_type=["Interception",
+              "Defense",
+              "Dark Sector Defense"]
+
 def printArb() -> str:
     responseArb = requests.get("https://api.warframestat.us/pc/arbitration")
     string = json.dumps(responseArb.json(), sort_keys=True, indent=4)
@@ -111,7 +115,8 @@ def printArb() -> str:
     print(string[indexEnemy])
     print(string[indexTime])
     substring_Name: str=string[indexName:indexName+14]
-    substring_Type: str=string[indexEnemy:indexEnemy+8]
+    substring_Enemy_Type: str=string[indexEnemy:indexEnemy+8]
+    substring_Mission_Type: str=string[indexType:indexType+19]
     substring_Time: int=int(string[indexTime:indexTime+2]) -4
     print(substring_Time)
     #print(substring)
@@ -126,17 +131,21 @@ def printArb() -> str:
 
     for arbitration in arb_tileset:
         if arbitration.lower().strip() in substring_Name.lower().strip():
-            message= (f'Mission is {arbitration}. Tier: {arb_tier_list[index]} \n')
+            message= (f'Mission is {arbitration}. \nTier: {arb_tier_list[index]} \n')
+            break
         index += 1
 
     for enemy in enemy_types:
-        if enemy.lower().strip() in substring_Type.lower().strip():
+        if enemy.lower().strip() in substring_Enemy_Type.lower().strip():
             message+= f'Enemy Type: {enemy}\n'
+            break
         #      break
         # print(i)
-
+    for type in mission_type:
+            if type.lower().strip() in substring_Mission_Type.lower().strip():
+                message+= f'Mission Type: {type}\n'
     current_minutes=current_minutes_copy-current_minutes
-    message+= f'Time left: {current_minutes}'
+    message+= f'Time left: {current_minutes}m'
     print(message)
     return message
 
@@ -165,20 +174,20 @@ def printCetusStatus():
 
 # print(response.json())
 
-number = int(input("1->Arb 2->Archon 3->PoE cycle:  \n"))
-
-if (number != 0):
-
-    while number != 0:
-
-        match number:
-            case 1:
-              printArb()
-
-            case 2:
-                printArchon()
-
-            case 3:
-                printCetusStatus()
-
-        number = int(input("1->Arb 2->Archon 3->PoE cycle:  \n"))
+# number = int(input("1->Arb 2->Archon 3->PoE cycle:  \n"))
+#
+# if (number != 0):
+#
+#     while number != 0:
+#
+#         match number:
+#             case 1:
+#               printArb()
+#
+#             case 2:
+#                 printArchon()
+#
+#             case 3:
+#                 printCetusStatus()
+#
+#         number = int(input("1->Arb 2->Archon 3->PoE cycle:  \n"))

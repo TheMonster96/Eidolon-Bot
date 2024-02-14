@@ -5,12 +5,15 @@ def get_response(user_input: str)-> str:
 
     match lowered :
         case '*':
-            return "Wrong command"
+            return "Incomplete command"
 
-        case '*arbitration':
+        case '*arb':
             return discBot.printArb()
 
         case '*eidolons':
+            return discBot.printCetusStatus()
+
+        case '*eidolon':
             return discBot.printCetusStatus()
 
 
